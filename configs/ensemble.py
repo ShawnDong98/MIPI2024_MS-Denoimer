@@ -71,7 +71,7 @@ test = dict(
             f"./checkpoints/ms_lnlt/model_epoch_299.pth"
         ],
         [
-            f"./ms_restormer/model_epoch_199.pth"
+            f"./checkpoints/ms_restormer/model_epoch_199.pth"
         ]
     ],
     swa_weights = [

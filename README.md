@@ -45,6 +45,16 @@ The dataset directory shows as following:
 
 # Test
 
+Put the pretrained checkpoints into corresponding directories
+
+Run following command
+
+```
+bash ensemble.sh
+```
+
+The results will be save at `results/test_save_img/`
+ 
 
 # Ackownlege
 
