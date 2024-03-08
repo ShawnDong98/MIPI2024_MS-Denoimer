@@ -25,7 +25,7 @@ dataset.test_a.opt.dataroot = ['./datasets/RawDenoising/test/Camera1/short/', '.
 
 model = OmegaConf.create()
 
-model.arch = L(MultiStageDenoimer)(
+model.arch = L(MultiStageDenoimerProfiling)(
     stages = 3,
     num_level = 4,
     share_params = False,
