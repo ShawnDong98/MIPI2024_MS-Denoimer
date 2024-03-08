@@ -43,7 +43,8 @@ cfg = LazyConfig.load(args.config_file)
 cfg.DETERMINISTIC = True
 
 # Model
-model = instantiate(cfg.model.arch).to(device)
+with torch.autocast(device_type=str(device)):
+    model = instantiate(cfg.model.arch).to(device)
 
 x = torch.randn((1, 4, 960, 960)).to(device)
 
@@ -57,7 +58,8 @@ print(f'Params:{n_param / (1024*1024)}M')
 
 
 start_time = time.time()
-model(x)
+with torch.autocast(device_type=str(device)):
+    model(x)
 end_time = time.time()
 
 print(f'Time:{end_time - start_time}s')
