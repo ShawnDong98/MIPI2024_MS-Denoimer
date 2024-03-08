@@ -63,21 +63,9 @@ model.autocast = True
 test = dict(
     output_dir = f"./results/",
     pretrained_ckpt_path = [
-        [
             f"./checkpoints/ms_denoimer/model_epoch_175.pth",
-           
-        ],
-        [
-            f"./checkpoints/ms_lnlt/model_epoch_299.pth"
-        ],
-        [
+            f"./checkpoints/ms_lnlt/model_epoch_299.pth",
             f"./checkpoints/ms_restormer/model_epoch_199.pth"
-        ]
-    ],
-    swa_weights = [
-        [1.0],
-        [1.0],
-        [1.0],
     ],
     ensemble_weights = [0.35, 0.15, 0.5]
 )

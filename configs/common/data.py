@@ -15,21 +15,12 @@ dataset.train = L(MIPIDataset)(
             'dataroot': [
                 './datasets/RawDenoising/train/Camera1/', 
                 './datasets/RawDenoising/train/Camera2/',
-                # './datasets/RawDenoising/SID/Sony/',
-                # './datasets/RawDenoising/ELD_npy/SonyA7S2/',
-                # './datasets/RawDenoising/ELD_npy/NikonD850/',
-                # './datasets/RawDenoising/ELD_npy/CanonEOS70D/',
-                # './datasets/RawDenoising/ELD_npy/CanonEOS700D/'
+                './datasets/RawDenoising/SID/Sony/',
             ],         # the path to our released dataset
-            # 'dataroot': ['./datasets/RawDenoising/train/Camera1/'],         # the path to our released dataset
             'data_pair_list': [
                 './datasets/RawDenoising/train/Camera1/train.txt', 
                 './datasets/RawDenoising/train/Camera2/train.txt',
-                # './datasets/RawDenoising/SID/Sony/train.txt',
-                # './datasets/RawDenoising/ELD_npy/SonyA7S2/SonyA7S2_list.txt',
-                # './datasets/RawDenoising/ELD_npy/NikonD850/NikonD850_list.txt',
-                # './datasets/RawDenoising/ELD_npy/CanonEOS70D/CanonEOS70D_list.txt',
-                # './datasets/RawDenoising/ELD_npy/CanonEOS700D/CanonEOS700D_list.txt',
+                './datasets/RawDenoising/SID/Sony/train.txt',
             ], # the path to the txt file of the mipi dataset
             ## Augmentation options
             'crop_size': 256,                          # whether to crop the paired data (center crop when not in train phase)

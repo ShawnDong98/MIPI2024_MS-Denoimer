@@ -15,6 +15,11 @@ from .common.test import test
 
 
 
+dataset.train.opt.dataroot = [
+                                './datasets/RawDenoising/train/Camera1/', 
+                                './datasets/RawDenoising/train/Camera2/',
+                            ]
+
 dataset.train.opt.crop_size = 960
 dataset.train.opt.load_in_mem = True
 
@@ -67,7 +72,6 @@ train.output_dir = f"./exp/ms_lnlt_Sony_Pretrain_levelx{model.arch.num_level}_bl
 train.resume_ckpt_path = f""
 
 
+test.pretrained_ckpt_path = f""
 
-test.pretrained_ckpt_path = f"./exp/ms_lnlt_SonyNikon_TV_Pretrain_finetune_levelx{model.arch.num_level}_block{''.join([str(i) for i in model.arch.num_blocks])}_{model.arch.stages}stg_patch960/2024_03_03_15_06_44/model_epoch_299.pth"
-
-test.output_dir = f"./exp/ms_lnlt_SonyNikon_TV_Pretrain_finetune_NoTV_levelx{model.arch.num_level}_block{''.join([str(i) for i in model.arch.num_blocks])}_{model.arch.stages}stg_patch960/2024_03_03_17_55_39/"
+test.output_dir = f"./results/"

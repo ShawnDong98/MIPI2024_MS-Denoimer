@@ -16,6 +16,11 @@ from .common.test import test
 
 
 
+dataset.train.opt.dataroot = [
+                                './datasets/RawDenoising/train/Camera1/', 
+                                './datasets/RawDenoising/train/Camera2/',
+                            ]
+
 dataset.train.opt.crop_size = 960
 dataset.train.opt.load_in_mem = True
 
@@ -56,46 +61,17 @@ model.ema = L(ExponentialMovingAverage)(
 model.autocast = True 
 
 
-# optimizer.lr = 3e-4 if model.arch.pretrain else 1e-4
 optimizer.lr = 1e-4
 
 
 train.epochs = 200
 
 train.debug = True
-train.output_dir = f"./exp/ms_denoimer_SonyNikon_TV_Pretrain_finetune_NoTV_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/"
+train.output_dir = f"./exp/ms_denoimer_finetune_levelx{model.arch.num_level}_block{''.join([str(i) for i in model.arch.num_blocks])}_{model.arch.stages}stg_patch960/"
 train.resume_ckpt_path = f""
 
 
-# test.pretrained_ckpt_path = f"./exp/ms_denoimer_Sony_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch{dataset.train.opt.crop_size}/2024_02_22_21_21_15/model_epoch_290.pth"
+test.pretrained_ckpt_path = f""
 
 
-
-test.pretrained_ckpt_path = [
-    # f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.archs.stages}stg_patch960/2024_02_25_14_28_02/model_epoch_150.pth",
-    # f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_02_25_14_28_02/model_epoch_160.pth",
-    # f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_02_25_14_28_02/model_epoch_165.pth",
-    # f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_02_25_14_28_02/model_epoch_170.pth",
-    f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_02_25_14_28_02/model_epoch_175.pth",
-    # f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_02_25_14_28_02/model_epoch_185.pth",
-    # f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_02_25_14_28_02/model_epoch_195.pth",
-    # f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_02_25_14_28_02/model_epoch_206.pth",
-    # f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_02_25_14_28_02/model_epoch_215.pth",
-    # f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_02_25_14_28_02/model_epoch_225.pth",
-    # f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_02_25_14_28_02/model_epoch_235.pth",
-    # f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_02_25_14_28_02/model_epoch_245.pth",
-    # f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_02_25_14_28_02/model_epoch_255.pth",
-    # f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_02_25_14_28_02/model_epoch_266.pth",
-    # f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_02_25_14_28_02/model_epoch_276.pth",
-    # f"./exp/ms_denoimer_Pretrain_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_03_02_11_05_46/model_epoch_199.pth", 
-    # f"./exp/ms_denoimer_SonyNikon_TV_Pretrain_finetune_NoTV_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_03_03_18_53_39/model_epoch_198.pth"
-]
-
-
-test.swa_weights = [1.0]
-
-
-
-# test.pretrained_ckpt_path = [f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_03_03_18_53_39/model_epoch_198.pth"]
-
-test.output_dir = f"./exp/ms_denoimer_Sony_finetune_levelx{model.arch.num_level}_block1134311_{model.arch.stages}stg_patch960/2024_02_25_14_28_02/"
+test.output_dir = f"./results/"

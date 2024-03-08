@@ -33,8 +33,6 @@ from denoiser.metrics import out2rgb, out2rgb_calculate_score
 from denoiser.utils.utils import checkpoint
 from denoiser.utils.swa import apply_swa
 
-
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
@@ -57,7 +55,7 @@ if cfg.test.pretrained_ckpt_path:
             print("SWA....")
             model = apply_swa(model, ckpt, swa_weight, device=device)
         else:
-            save_state = torch.load(cfg.test.pretrained_ckpt_path, map_location=device)
+            save_state = torch.load(ckpt, map_location=device)
             model.load_state_dict(save_state['model'])
 
 
