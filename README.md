@@ -21,7 +21,7 @@ Diagram of MS-Denoimer. (a) The diagram of the Multi-Stage Denoimer. (b) The dia
 
 # Dataset
 
-The dataset directory shows as following:
+The dataset directory shows as following, the SID dataset is processed following [LED](https://github.com/Srameo/LED/blob/main/docs/benchmark.md):
 
 ```
 |---datasets
@@ -57,9 +57,9 @@ The dataset directory shows as following:
 
 # Test
 
-Put the pretrained checkpoints ([google drive]() | [baidu disk]()) into corresponding directories
+To reproduce the result in the leaderboard, place the pretrained checkpoints ([google drive](https://drive.google.com/drive/folders/1o85rovAtldFGHgA9czL_OBxLye6qkQDf?usp=drive_link) | [baidu disk](https://pan.baidu.com/s/1I0acj5q51Gf2GEKJyEbutg?pwd=8888)) into corresponding `checkpoints/` directories
 
-Run following command
+Then, run following command
 
 ```
 bash ensemble.sh
@@ -70,7 +70,7 @@ The results will be save at `results/test_save_img/`
 
 # Acknowledgements
 
-Our code is based on the following repo, thanks for their generous open source:
+Our code is based on the following repos, thanks for their generous open source:
 
 - [https://github.com/Srameo/LED](https://github.com/Srameo/LED)
 - [https://github.com/facebookresearch/detectron2](https://github.com/facebookresearch/detectron2)
