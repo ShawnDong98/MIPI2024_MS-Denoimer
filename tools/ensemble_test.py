@@ -50,10 +50,10 @@ models = [instantiate(arch).to(device) for arch in cfg.model.archs]
 
 if cfg.test.pretrained_ckpt_path:
     print(f"===> Loading Checkpoint from {cfg.test.pretrained_ckpt_path}")
-    for model, ckpt, swa_weight in zip(models, cfg.test.pretrained_ckpt_path, cfg.test.swa_weights):
+    for i, (model, ckpt) in enumerate(zip(models, cfg.test.pretrained_ckpt_path)):
         if isinstance(cfg.test.pretrained_ckpt_path, Sequence):
             print("SWA....")
-            model = apply_swa(model, ckpt, swa_weight, device=device)
+            model = apply_swa(model, ckpt, cfg.test.swa_weights[i], device=device)
         else:
             save_state = torch.load(ckpt, map_location=device)
             model.load_state_dict(save_state['model'])
