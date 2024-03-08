@@ -45,22 +45,25 @@ cfg.DETERMINISTIC = True
 # Model
 model = instantiate(cfg.model.arch).to(device)
 
+model.eval()
+
 x = torch.randn((1, 4, 960, 960)).to(device)
 
-
-with torch.autocast(device_type=str(device)):
-    flops = FlopCountAnalysis(model, (x))
-    all_flops = flops.total()
-    n_param = sum([p.nelement() for p in model.parameters()])
-    print(f'GMac:{flops.total()/(1024*1024*1024)}')
-    print(f'Params:{n_param / (1024*1024)}M')
+with torch.no_grad():
+    with torch.autocast(device_type=str(device)):
+        flops = FlopCountAnalysis(model, (x))
+        all_flops = flops.total()
+        n_param = sum([p.nelement() for p in model.parameters()])
+        print(f'GMac:{flops.total()/(1024*1024*1024)}')
+        print(f'Params:{n_param / (1024*1024)}M')
 
 
 
 
 start_time = time.time()
-with torch.autocast(device_type=str(device)):
-    model.forward_test_tta(x)
+with torch.no_grad():
+    with torch.autocast(device_type=str(device)):
+        model.forward_test_tta(x)
 end_time = time.time()
 
 print(f'Time:{end_time - start_time}s')
