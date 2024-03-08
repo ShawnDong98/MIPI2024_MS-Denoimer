@@ -51,7 +51,7 @@ models = [instantiate(arch).to(device) for arch in cfg.model.archs]
 if cfg.test.pretrained_ckpt_path:
     print(f"===> Loading Checkpoint from {cfg.test.pretrained_ckpt_path}")
     for i, (model, ckpt) in enumerate(zip(models, cfg.test.pretrained_ckpt_path)):
-        if isinstance(cfg.test.pretrained_ckpt_path, Sequence):
+        if isinstance(cfg.test.pretrained_ckpt_path[0], Sequence):
             print("SWA....")
             model = apply_swa(model, ckpt, cfg.test.swa_weights[i], device=device)
         else:
