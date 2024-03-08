@@ -48,13 +48,13 @@ model = instantiate(cfg.model.arch).to(device)
 x = torch.randn((1, 4, 960, 960)).to(device)
 
 
-with torch.autocast(device_type=str(device)):
-    flops = FlopCountAnalysis(model, (x))
+# with torch.autocast(device_type=str(device)):
+#     flops = FlopCountAnalysis(model, (x))
 
-all_flops = flops.total()
-n_param = sum([p.nelement() for p in model.parameters()])
-print(f'GMac:{flops.total()/(1024*1024*1024)}')
-print(f'Params:{n_param / (1024*1024)}M')
+# all_flops = flops.total()
+# n_param = sum([p.nelement() for p in model.parameters()])
+# print(f'GMac:{flops.total()/(1024*1024*1024)}')
+# print(f'Params:{n_param / (1024*1024)}M')
 
 
 start_time = time.time()
