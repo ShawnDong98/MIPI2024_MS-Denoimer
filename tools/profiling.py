@@ -60,7 +60,7 @@ with torch.autocast(device_type=str(device)):
 
 start_time = time.time()
 with torch.autocast(device_type=str(device)):
-    model(x)
+    model.forward_test_tta(x)
 end_time = time.time()
 
 print(f'Time:{end_time - start_time}s')
