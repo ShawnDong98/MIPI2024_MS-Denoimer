@@ -583,22 +583,24 @@ class MultiStageDenoimer(BaseModel):
         return tta_out
         
         
-    
 
 class MultiStageDenoimerProfiling(BaseModel):
     def __init__(self,
                  stages,
+                 num_level,
                  share_params,
                  in_dim,
                  dim,
                  out_dim,
-                 window_size,
+                 window_sizes,
                  layernorm_type,
                  ffn_expansion_factor,
                  num_blocks,
-                 pretrain=False
+                 pretrain=False,
+                 losses=defaultdict(),
+                 noise_maker = None
                  ):
-        super().__init__()
+        super().__init__(losses=losses)
         self.pretrain = pretrain
         self.stages = stages
         self.num_blocks = num_blocks
@@ -610,9 +612,10 @@ class MultiStageDenoimerProfiling(BaseModel):
                 in_dim = in_dim,
                 dim = dim, 
                 out_dim = out_dim,
-                window_size = window_size,
+                window_sizes = window_sizes,
                 layernorm_type = layernorm_type,
                 ffn_expansion_factor = ffn_expansion_factor,
+                num_level = num_level,
                 num_blocks = num_blocks,
 
             ) for _ in range(stages)
@@ -620,11 +623,17 @@ class MultiStageDenoimerProfiling(BaseModel):
                 in_dim = in_dim,
                 dim = dim, 
                 out_dim = out_dim,
-                window_size = window_size,
+                window_sizes = window_sizes,
                 layernorm_type = layernorm_type,
                 ffn_expansion_factor = ffn_expansion_factor,
+                num_level = num_level,
                 num_blocks = num_blocks,
         )
+
+        if noise_maker: 
+            self.noise_maker = instantiate(noise_maker)
+        else:
+            self.noise_maker = noise_maker
 
         self.apply(self._init_weights)
 
@@ -641,13 +650,35 @@ class MultiStageDenoimerProfiling(BaseModel):
             nn.init.constant_(m.bias, 0)
             nn.init.constant_(m.weight, 1.0)
 
-
     def prepare_input(self, data):
         return data
     
     def forward(self, x):
-        if self.pretrain: out = x
-        else: out = x
+        out = x
         for i in range(self.stages):
-            out = self.stage[i](out) if not self.share_params else self.stage(out)
+            out = self.stage[i](out)['pred'] if not self.share_params else self.stage(out)['pred']
         return out
+    
+    def forward_test_tta(self, x):
+        lq = x
+        tta_out = torch.zeros_like(lq).to(lq.device)
+        tta_list = ['vflip', 'hflip', 'rot90']
+        for tta in tta_list:
+            if tta == 'vflip':
+                x = torch.flip(lq, (2,))
+                pred = self(x)
+                pred = torch.flip(pred, (2,))
+                x = torch.flip(x, (2,))
+            if tta == 'hflip': 
+                x = torch.flip(lq, (3,))
+                pred = self(x)
+                pred = torch.flip(pred, (3,))
+                x = torch.flip(x, (3,))
+            if tta == 'rot90': 
+                x =  torch.permute(lq, (0, 1, 3, 2))
+                pred = self(x)
+                pred = torch.permute(pred, (0, 1, 3, 2))
+                x =  torch.permute(x, (0, 1, 3, 2))
+            tta_out += pred
+        tta_out = tta_out / len(tta_list)
+        return tta_out
