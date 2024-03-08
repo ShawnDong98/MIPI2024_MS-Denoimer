@@ -43,13 +43,13 @@ cfg = LazyConfig.load(args.config_file)
 cfg.DETERMINISTIC = True
 
 # Model
-with torch.autocast(device_type=str(device)):
-    model = instantiate(cfg.model.arch).to(device)
+model = instantiate(cfg.model.arch).to(device)
 
 x = torch.randn((1, 4, 960, 960)).to(device)
 
 
-flops = FlopCountAnalysis(model, (x))
+with torch.autocast(device_type=str(device)):
+    flops = FlopCountAnalysis(model, (x))
 
 all_flops = flops.total()
 n_param = sum([p.nelement() for p in model.parameters()])
