@@ -1,6 +1,6 @@
 # MS-Denoimer: Multi Stage Denoiser with Spatial and Channel-wise Attention for Raw Image Denoising
 
-This repo is the implementation of solution "Residual Degradation Learning Unfolding Framework with Mixing Priors across Spectral and Spatial for Compressive Spectral Imaging" in MIPI2024 Raw Image Denoising.
+This repo is the implementation of the solution "MS-Denoiser: Multi-Stage Denoiser with Spatial and Channel-wise Attention for Raw Image Denoising" in the CVPR 2024 workshop challenge MIPI2024 Few-shot Raw Image Denoising.
 
 <div align=center>
 <img src="https://github.com/ShawnDong98/MIPI2024_MS-Denoimer/blob/main/figures/teaser.gif" width = "350" height = "350" alt="">
@@ -57,7 +57,7 @@ The dataset directory shows as following:
 
 # Test
 
-Put the pretrained checkpoints (![google drive]() | [baidu disk]()) into corresponding directories
+Put the pretrained checkpoints ([google drive]() | [baidu disk]()) into corresponding directories
 
 Run following command
 
